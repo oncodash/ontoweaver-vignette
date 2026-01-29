@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.32">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -63,18 +63,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </style>
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="vignette_jobim_files/libs/clipboard/clipboard.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js" integrity="sha384-ZvpUoO/+PpLXR1lu4jmpXWu80pZlYUAfxl5NsBMWOEPSjUn/6Z/hRTt8+pR6L4N2" crossorigin="anonymous"></script><script src="vignette_jobim_files/libs/clipboard/clipboard.min.js"></script>
 <script src="vignette_jobim_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="vignette_jobim_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="vignette_jobim_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="vignette_jobim_files/libs/quarto-html/popper.min.js"></script>
 <script src="vignette_jobim_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="vignette_jobim_files/libs/quarto-html/anchor.min.js"></script>
 <link href="vignette_jobim_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="vignette_jobim_files/libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="vignette_jobim_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="vignette_jobim_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="vignette_jobim_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="vignette_jobim_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+<link href="vignette_jobim_files/libs/bootstrap/bootstrap-d6a003b94517c951b2d65075d42fb01b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.min.js" integrity="sha384-c9c+LnTbwQ3aujuU7ULEPVvgLs+Fn6fJUvIGTsuu1ZcCf11fiEubah0ttpca4ntM sha384-6V1/AdqZRWk1KAlWbKBlGhN7VG4iE/yAZcO6NZPMF8od0vukrvr0tg4qY6NSrItx" crossorigin="anonymous"></script>
 
 <script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
 
@@ -170,6 +171,43 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="semantic-knowledge-graphs" class="level2">
 <h2 class="anchored" data-anchor-id="semantic-knowledge-graphs">Semantic Knowledge Graphs</h2>
+<p>In order to map our data into a semantic knowledge graph we use ontologies. An ontology is a set of entities (classes), which are organized in a hierarchical structure from general concepts to more specific ones. On the figure below we show a sample of the Biolink ontology with the most general term <code>entity</code> branching into classes <code>association</code> and <code>named thing</code>, which further branch into subclasses.</p>
+<pre><code>entity
+  │
+  ├─ association
+  │    ├─ patient has variant
+  │    ├─ variant to gene association
+  │    └─ treatment has citation
+  │
+  └─ named thing
+       ├─ patient - case
+       ├─ gene
+       └─ disease</code></pre>
+<p>Let’s look at an example of what a semantic knowledge graph mapped onto an ontology would look like:</p>
+<pre><code>Thing
+  │
+  ├─ Association
+  │    └─  genotype to phenotypic feature
+  │             └─ reference genome
+  │
+  └─ Entity
+       ├─ sequence variant
+       └─ genome</code></pre>
+<div id="15856cf6db5c2a9c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-10-02T08:52:08.600250Z&quot;,&quot;start_time&quot;:&quot;2025-10-02T08:52:08.593194Z&quot;}}" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> Image</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>display(Image(<span class="st">"figures/jobim/kg_schema.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="vignette_jobim_files/figure-html/cell-2-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>We show here a knowledge graph representing the ontology above, starting from the most general term of the ontology <code>Thing</code>, branching into <code>Entity</code> and <code>Association</code> classes, which further branch into <code>Genome</code> and <code>Sequence variant</code> subclasses on the <code>Entity</code> side, and <code>genotype to phenotypic feature</code> and <code>reference genome</code> subclasses on the <code>Association</code> side.</p>
+<p>On the lower side of the figure we see a simple knowledge graph with two nodes: - <code>variant_1</code> which represents an instance of a <code>sequence variant</code>, and - <code>genome_A</code> which represents an instance of a <code>genome</code></p>
+<p>These nodes are connected via an edge of type <code>reference genome</code>, thus preserving the ontological structure of the data.</p>
 </section>
 <section id="description-of-the-data" class="level2">
 <h2 class="anchored" data-anchor-id="description-of-the-data">Description of the data</h2>
@@ -195,8 +233,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="installing-dependencies" class="level3">
 <h3 class="anchored" data-anchor-id="installing-dependencies">Installing dependencies</h3>
 <p>We use <em>Poetry</em> to manage dependencies and virtual environments. If you don’t have it installed, you can install it with:</p>
-<div id="005b2b41" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:51:49.829505Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:51:48.696917Z&quot;}}" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> poetry install <span class="op">--</span>no<span class="op">-</span>root</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="005b2b41" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T09:47:35.001814Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T09:47:33.960137Z&quot;}}" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> poetry install <span class="op">--</span>no<span class="op">-</span>root</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-blue-fg">Installing dependencies from lock file</span>
@@ -212,8 +250,8 @@ No dependencies to install or update
 </section>
 <section id="starting-the-poetry-environment" class="level3">
 <h3 class="anchored" data-anchor-id="starting-the-poetry-environment">Starting the <em>poetry</em> environment</h3>
-<div id="dde7127a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:51:54.390360Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:51:53.996340Z&quot;}}" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> <span class="bu">eval</span> $(poetry env activate) <span class="co"># new implementation of `poetry shell`</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="dde7127a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T09:47:40.708112Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T09:47:40.214867Z&quot;}}" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> <span class="bu">eval</span> $(poetry env activate) <span class="co"># new implementation of `poetry shell`</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 </section>
@@ -222,17 +260,17 @@ No dependencies to install or update
 <section id="simple-mapping-using-snvs" class="level3">
 <h3 class="anchored" data-anchor-id="simple-mapping-using-snvs">1. Simple mapping using SNVs</h3>
 <p>First, let’s look at the available data we have from the Single Nucleotide Variants database.</p>
-<div id="bced98dfbcae3c42" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:52:01.665497Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:52:01.001804Z&quot;}}" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/jobim_subsets/1_Simple_mapping/snv_subset_1.csv"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div id="bced98dfbcae3c42" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-14T13:14:13.412456Z&quot;,&quot;start_time&quot;:&quot;2026-01-14T13:14:13.382167Z&quot;}}" data-execution_count="3">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/jobim_subsets/1_Simple_mapping/snv_subset_1.csv"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -244,70 +282,70 @@ No dependencies to install or update
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>CC1343</td>
 <td>CC5333_p2OvaL1_DNA1</td>
 <td>LATS1</td>
 <td>1_snv</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>EX1</td>
 <td>EX1_pOvaL1_DNA1</td>
 <td>BRCA1</td>
 <td>2_snv</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>CC3540</td>
 <td>CC2207_pPer1_DNA1</td>
 <td>ARID1B</td>
 <td>3_snv</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>CC4898</td>
 <td>CC0638_iOme_DNA1</td>
 <td>TP53</td>
 <td>4_snv</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>CC2114</td>
 <td>CC0047_iBow1_DNA1</td>
 <td>TP53</td>
 <td>5_snv</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>CC4700</td>
 <td>CC1860_pOvaR1_TR</td>
 <td>ARID2</td>
 <td>6_snv</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>CC4804</td>
 <td>CC3307_pAdnL1_DNA3</td>
 <td>TBL2</td>
 <td>7_snv</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>CC9548</td>
 <td>CC9256_pPer_DNA4</td>
 <td>TP53</td>
 <td>8_snv</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>CC7699</td>
 <td>CC8958_pOva_DNA1</td>
 <td>TP53</td>
 <td>9_snv</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>CC2375</td>
 <td>CC1492_iOth1_DNA1</td>
 <td>ADAM12</td>
@@ -321,28 +359,28 @@ No dependencies to install or update
 </div>
 <p>We want to build a KG with a simple schema, encompassing patient IDs, the IDs of the samples they provided, the sequence variants they have, and the genes those variants are in. We first start by defining the schema of the desired graph, which would in our case look like this:</p>
 <div id="8fa0a00ea8dc3853" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:52:04.250007Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:52:04.239409Z&quot;}}" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> SVG, display</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_graph_1.svg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> SVG, display</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_graph_1.svg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-5-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-6-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>After defining the schema, we need to define the mappings between the data and the ontology. The mappings will specify how each column in the CSV files corresponds to a node or edge in the graph. This is defined in the OntoWeaver mapping files, which are YAML files that describe the structure of the data and how it should be transformed into nodes and edges in the graph.</p>
 <p>Below we display the mapping file we use for the build up of the first example graph of the SNV database.</p>
-<div id="80e8f92984999e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:52:06.150920Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:52:06.135860Z&quot;}}" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, JSON</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/1_Simple_mapping/snv.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="80e8f92984999e9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-15T13:51:22.518528Z&quot;,&quot;start_time&quot;:&quot;2025-07-15T13:51:22.500463Z&quot;}}" data-execution_count="4">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, JSON</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/1_Simple_mapping/snv.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
@@ -352,38 +390,44 @@ No dependencies to install or update
 <p>For simplicity, in this first section we keep to the usage of only the <code>map</code> transformer, which simply extracts the data as it is from the cells of the defined column. For each transformer we define the <code>columns</code> to use for the extraction of the data, as well as the <code>to_object</code> keyword, which defines the type of node to be created from the extracted data, such as <code>gene</code> or <code>sample</code>. In addition to that, we also define the edge which is connecting the created nodes to the subject node, using the <code>via_relation</code> keyword.</p>
 <p>In some cases we do not want to use the default subject type for each row, but rather use a different column as the start point of an edge. In this case, we can use the <code>from_subject</code> keyword to specify the type from which we want the edge to start from. For example, in the mapping file above, we use the <code>from_subject</code> keyword to create an edge type <code>alteration_affects_gene</code> from the <code>alteration</code> node, to the <code>gene</code> node, thus voiding the start of the edge from the <code>patient</code> node. which is the default subject type for each row.</p>
 <p>After having identified the general structure of the graph and the definition of the mappings, we must now define the BioCypher schema, which is a YAML file that describes the structure of the graph. The schema defines the nodes and edges in the graph, their properties, and how they are related to each other. You can find more information about the BioCypher schema in the <a href="https://biocypher.org/BioCypher/learn/tutorials/pandas_tutorial/#schema-configuration">BioCypher documentation</a>.</p>
-<div id="15d1e2a3bc227e98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:52:08.893643Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:52:08.887507Z&quot;}}" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, JSON</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/1_Simple_mapping/biocypher_schema.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="15d1e2a3bc227e98" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-15T13:51:26.100434Z&quot;,&quot;start_time&quot;:&quot;2025-07-15T13:51:26.093389Z&quot;}}" data-execution_count="5">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> yaml</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, JSON</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/1_Simple_mapping/biocypher_schema.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
 </div>
 <p>Below we show the OntoWeaver CLI command, which is used to run the mapping process. The command specifies the input CSV file, the mapping file, the Biocypher configuration file, and the Biocypher schema file. The <code>--biocypher-config</code> option points to a YAML file that contains the configuration for Biocypher, while the <code>--biocypher-schema</code> option points to a YAML file that defines the schema of the graph.</p>
 <p>More information about the OntoWeaver CLI can be found by running:</p>
-<div id="4005b62069f1a0f1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:52:12.171141Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:52:11.148021Z&quot;}}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> ontoweave <span class="op">--</span><span class="bu">help</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="4005b62069f1a0f1" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T09:54:41.072002Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T09:54:38.198815Z&quot;}}" data-execution_count="8">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> poetry run ontoweave <span class="op">--</span><span class="bu">help</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>INFO -- This is BioCypher v0.9.6.
-INFO -- Logging into `biocypher-log/biocypher-20250704-145211.log`.
+<pre><code>INFO -- This is BioCypher v0.12.2.
+INFO -- Logging into `biocypher-log/biocypher-20260115-105439.log`.
+/Users/mbaric/Library/Caches/pypoetry/virtualenvs/ontoweaver-vignette-Q0c7RTWb-py3.12/lib/python3.12/site-packages/rdflib/extras/external_graph_libs.py:80: SyntaxWarning: invalid escape sequence '\*'
+  """Converts the given graph into a networkx.MultiDiGraph.
+/Users/mbaric/Library/Caches/pypoetry/virtualenvs/ontoweaver-vignette-Q0c7RTWb-py3.12/lib/python3.12/site-packages/rdflib/extras/external_graph_libs.py:137: SyntaxWarning: invalid escape sequence '\*'
+  """Converts the given graph into a networkx.DiGraph.
+/Users/mbaric/Library/Caches/pypoetry/virtualenvs/ontoweaver-vignette-Q0c7RTWb-py3.12/lib/python3.12/site-packages/rdflib/extras/external_graph_libs.py:200: SyntaxWarning: invalid escape sequence '\*'
+  """Converts the given graph into a networkx.Graph.
 usage: ontoweave [-h] [-c FILE] [--print_config[=flags]] [-C FILE] [-s FILE]
-                 [-p NB_CORES] [-i] [-r [PYTHON_MODULE ...]] [-S CHARACTER]
-                 [-a {suffix,prefix,none}] [-A CHARACTER] [-E]
+                 [-p NB_CORES] [-i] [-R KEY] [-r [PYTHON_MODULE ...]]
+                 [-S CHARACTER] [-a {suffix,prefix,none}] [-A CHARACTER] [-E]
                  [-l {DEBUG,INFO,WARNING,ERROR,CRITICAL}] [-v] [-V]
-                 [-Ds CHARACTER] [-D]
+                 [-e CHARACTER] [-D]
                  FILE:MAPPING [FILE:MAPPING ...]
 
 A command line tool to run OntoWeaver mapping adapters on a set of tabular data, and call the created BioCypher export scripts.
 
 default config file locations:
-  ['/etc/xdg/ontoweave/ontoweave.yaml', '/Users/mbaric/.config/ontoweave/ontoweave.yaml', '../ontoweaver/ontoweave.yaml'], Note: no existing default config file found.
+  ['/etc/xdg/ontoweave/ontoweave.yaml', '/Users/mbaric/.config/ontoweave/ontoweave.yaml', '../src/ontoweaver/ontoweave.yaml'], Note: no existing default config file found.
 
 positional arguments:
   FILE:MAPPING          Run the given YAML MAPPING to extract data from the tabular FILE (usually a CSV). Several mappings can be passed to ontoweave. You may also use the same mapping on different data files. If set to `STDIN`, will read the list of mappings from standard input.
@@ -391,9 +435,9 @@ positional arguments:
 options:
   -h, --help            show this help message and exit
   -c FILE, --config FILE
-                        The ontoweave configuration file, which can host the same arguments than the command line tool. [default: /etc/xdg/ontoweave/ontoweave.yaml or /Users/mbaric/.config/ontoweave/ontoweave.yaml or ../ontoweaver/ontoweave.yaml]
+                        The ontoweave configuration file, which can host the same arguments than the command line tool. [default: /etc/xdg/ontoweave/ontoweave.yaml or /Users/mbaric/.config/ontoweave/ontoweave.yaml or ../src/ontoweaver/ontoweave.yaml]
   --print_config[=flags]
-                        Print the configuration after applying all other arguments and exit. The optional flags customizes the output and are one or more keywords separated by comma. The supported flags are: comments, skip_default, skip_null.
+                        Print the configuration after applying all other arguments and exit. The optional flags customizes the output and are one or more keywords separated by comma. The supported flags are: skip_default, skip_null.
   -C FILE, --biocypher-config FILE
                         The BioCypher config file (the one managing ontologies and the output backend). [default: biocypher_config.yaml]
   -s FILE, --biocypher-schema FILE
@@ -402,6 +446,7 @@ options:
                         Number of processor cores to use when processing with multi-threading. `0` means a sequential processing (no parallelization, the default). Use 'auto' to let ontoweave do its best to use a good number. [default: 0]
   -i, --import-script-run
                         If passed ontoweave will call the import scripts created by Biocypher for you.
+  -R KEY, --sort KEY    Sort nodes and edges on their IDs. [default: none]
   -r [PYTHON_MODULE ...], --register [PYTHON_MODULE ...]
                         Register all transformers available in the given module.
   -S CHARACTER, --prop-sep CHARACTER
@@ -416,8 +461,8 @@ options:
   -v, --validate-only   Only validate the given input data, do not apply the mapping.
   -V, --validate-output
                         Validate the output data against the mapping rules.
-  -Ds CHARACTER, --database-sep CHARACTER
-                        Character used to separate values in the database.
+  -e CHARACTER, --pandas-sep CHARACTER
+                        Character used by the Pandas module to separate values in the input file database. [default: guessed from the extension]
   -D, --debug           Run in debug mode. implies `--log-level DEBUG`, disables `--pass-errors`. NOTE: this will disable explicit return codes and show the call stack.
 
 Example usage:
@@ -426,81 +471,89 @@ Example usage:
 </div>
 </div>
 <p>Below we show the command that we use to run the mapping process for the first example graph of the SNV database. The command specifies the input CSV file, the mapping file, the Biocypher configuration file, and the Biocypher schema file. The <code>-a suffix</code> option is used to add a suffix to the generated nodes. Each suffix represents the ontological type of the node.</p>
-<div id="e6e83cfbd22b79ee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:52:18.049642Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:52:13.411936Z&quot;}}" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">1</span><span class="er">_Simple_mapping</span><span class="op">/</span>snv_subset_1.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">1</span><span class="er">_Simple_mapping</span><span class="op">/</span>snv.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">1</span><span class="er">_Simple_mapping</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">1</span><span class="er">_Simple_mapping</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="e6e83cfbd22b79ee" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T09:54:57.396761Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T09:54:52.699798Z&quot;}}" data-execution_count="9">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> poetry run ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">1</span><span class="er">_Simple_mapping</span><span class="op">/</span>snv_subset_1.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">1</span><span class="er">_Simple_mapping</span><span class="op">/</span>snv.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">1</span><span class="er">_Simple_mapping</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">1</span><span class="er">_Simple_mapping</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>INFO -- This is BioCypher v0.9.6.
-INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
-/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704145217/neo4j-admin-import-call.sh</code></pre>
+<pre><code>INFO -- This is BioCypher v0.12.2.
+INFO -- Logging into `biocypher-log/biocypher-20260115-105453.log`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115105456/neo4j-admin-import-call.sh</code></pre>
 </div>
 </div>
 <p>In addition to the <code>ontoweave</code> CLI, you can also write a short script using the available extraction functions to achieve the same result.</p>
-<div id="602eaa7f3f2d1443" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T14:37:48.445506Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T14:37:48.417525Z&quot;}}" data-execution_count="80">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocypher</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ontoweaver</span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the path to the mapping file.</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>data_mapping <span class="op">=</span> {<span class="ss">f"./data/jobim_subsets/1_Simple_mapping/snv_subset_1.csv"</span>: <span class="ss">f"./jobim/1_Simple_mapping/snv.yaml"</span>}</span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract nodes and edges from the mapping file.</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>nodes, edges <span class="op">=</span> ontoweaver.extract(filename_to_mapping<span class="op">=</span>data_mapping, affix <span class="op">=</span> <span class="st">"suffix"</span>)</span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the nodes and edges using BioCypher.</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>bc <span class="op">=</span> biocypher.BioCypher(</span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    biocypher_config_path<span class="op">=</span><span class="ss">f"biocypher_config.yaml"</span>,</span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>    schema_config_path<span class="op">=</span><span class="ss">f"biocypher_schema.yaml"</span>,</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>bc.write_nodes(nodes)</span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>bc.write_edges(edges)</span>
-<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>bc.write_import_call()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-error">
-<div class="ansi-escaped-output">
-<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[80]</span><span class="ansi-green-fg">, line 11</span>
-<span class="ansi-green-fg">      8</span> nodes, edges = ontoweaver.extract(filename_to_mapping=data_mapping, affix = <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">suffix</span><span class="ansi-yellow-fg">"</span>)
-<span class="ansi-green-fg">     10</span> <span style="font-style:italic;color:rgb(95,135,135)"># Write the nodes and edges using BioCypher.</span>
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">11</span> bc = <span class="ansi-yellow-bg">biocypher</span><span class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">BioCypher</span><span class="ansi-yellow-bg">(</span>
-<span class="ansi-green-fg">     12</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">biocypher_config_path</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">f</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">biocypher_config.yaml</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">     13</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">schema_config_path</span><span class="ansi-yellow-bg">=</span><span class="ansi-yellow-fg ansi-yellow-bg">f</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-fg ansi-yellow-bg">biocypher_schema.yaml</span><span class="ansi-yellow-fg ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-fg">     14</span> <span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">     16</span> bc.write_nodes(nodes)
-<span class="ansi-green-fg">     17</span> bc.write_edges(edges)
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Library/Caches/pypoetry/virtualenvs/decider-genetics-Q0c7RTWb-py3.12/lib/python3.12/site-packages/biocypher/_core.py:94</span>, in <span class="ansi-cyan-fg">BioCypher.__init__</span><span class="ansi-blue-fg">(self, dbms, offline, strict_mode, biocypher_config_path, schema_config_path, head_ontology, tail_ontologies, output_directory, cache_directory, db_name)</span>
-<span class="ansi-green-fg">     78</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg">__init__</span>(
-<span class="ansi-green-fg">     79</span>     <span style="color:rgb(0,135,0)">self</span>,
-<span class="ansi-green-fg">     80</span>     dbms: <span style="color:rgb(0,135,0)">str</span> = <span style="font-weight:bold;color:rgb(0,135,0)">None</span>,
-<span class="ansi-green-fg">   (...)</span><span class="ansi-green-fg">     91</span> ):
-<span class="ansi-green-fg">     92</span>     <span style="font-style:italic;color:rgb(95,135,135)"># Update configuration if custom path is provided</span>
-<span class="ansi-green-fg">     93</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> biocypher_config_path:
-<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">94</span>         <span class="ansi-yellow-bg">_file_update</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">biocypher_config_path</span><span class="ansi-yellow-bg">)</span>
-<span class="ansi-green-fg">     96</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> db_name:
-<span class="ansi-green-fg">     97</span>         logger.warning(
-<span class="ansi-green-fg">     98</span>             <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">The parameter `db_name` is deprecated. Please set the </span><span class="ansi-yellow-fg">"</span>
-<span class="ansi-green-fg">     99</span>             <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">`database_name` setting in the `biocypher_config.yaml` file </span><span class="ansi-yellow-fg">"</span>
-<span class="ansi-green-fg">    100</span>             <span class="ansi-yellow-fg">"</span><span class="ansi-yellow-fg">instead.</span><span class="ansi-yellow-fg">"</span>,
-<span class="ansi-green-fg">    101</span>         )
-
-<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">~/Library/Caches/pypoetry/virtualenvs/decider-genetics-Q0c7RTWb-py3.12/lib/python3.12/site-packages/biocypher/_config/__init__.py:131</span>, in <span class="ansi-cyan-fg">update_from_file</span><span class="ansi-blue-fg">(path)</span>
-<span class="ansi-green-fg">    126</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span><span style="color:rgb(188,188,188)"> </span><span class="ansi-blue-fg">update_from_file</span>(path: <span style="color:rgb(0,135,0)">str</span>):
-<span class="ansi-green-fg">    127</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic" class="ansi-yellow-fg">"""</span>
-<span class="ansi-green-fg">    128</span> <span style="font-style:italic" class="ansi-yellow-fg">    Update the module configuration from a YAML file.</span>
-<span class="ansi-green-fg">    129</span> <span style="font-style:italic" class="ansi-yellow-fg">    """</span>
-<span class="ansi-green-fg">--&gt; </span><span class="ansi-green-fg">131</span>     config(**_read_yaml(path))
-
-<span class="ansi-red-fg">TypeError</span>: biocypher._config.config() argument after ** must be a mapping, not NoneType</pre>
+<div id="602eaa7f3f2d1443" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T12:44:26.251337Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T12:44:22.289956Z&quot;}}" data-execution_count="15">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocypher</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ontoweaver</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the path to the mapping file.</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>data_mapping <span class="op">=</span> {<span class="ss">f"./data/jobim_subsets/1_Simple_mapping/snv_subset_1.csv"</span>: <span class="ss">f"./jobim/1_Simple_mapping/snv.yaml"</span>}</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract nodes and edges from the mapping file.</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>nodes, edges <span class="op">=</span> ontoweaver.extract(data_mapping, affix <span class="op">=</span> <span class="st">"suffix"</span>)</span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform nodes and edges to correct format.</span></span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> ontoweaver.ow2bc(nodes)</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> ontoweaver.ow2bc(edges)</span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the nodes and edges using BioCypher.</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>bc <span class="op">=</span> biocypher.BioCypher(</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>    biocypher_config_path<span class="op">=</span><span class="ss">f"./jobim/1_Simple_mapping/biocypher_config.yaml"</span>,</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>    schema_config_path<span class="op">=</span><span class="ss">f"./jobim/1_Simple_mapping/biocypher_schema.yaml"</span>,</span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>bc.write_nodes(nodes)</span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>bc.write_edges(edges)</span>
+<span id="cb16-22"><a href="#cb16-22" aria-hidden="true" tabindex="-1"></a>bc.write_import_call()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+INFO -- Running BioCypher with schema configuration from ./jobim/1_Simple_mapping/biocypher_schema.yaml.
+INFO:biocypher:Running BioCypher with schema configuration from ./jobim/1_Simple_mapping/biocypher_schema.yaml.
+INFO -- Loading ontologies...
+INFO:biocypher:Loading ontologies...
+INFO -- Instantiating OntologyAdapter class for https://github.com/biolink/biolink-model/raw/v3.2.1/biolink-model.owl.ttl.
+INFO:biocypher:Instantiating OntologyAdapter class for https://github.com/biolink/biolink-model/raw/v3.2.1/biolink-model.owl.ttl.
+INFO -- Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO:biocypher:Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO -- Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO:biocypher:Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO -- Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134426`.
+INFO:biocypher:Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134426`.
+DEBUG:biocypher:Writing node CSV from generator.
+DEBUG:biocypher:Translating nodes to BioCypher
+WARNING -- Duplicate node type gene found. 
+WARNING:biocypher:Duplicate node type gene found. 
+DEBUG:biocypher:Finished translating nodes to BioCypher.
+INFO -- Writing 10 entries to Patient-part000.csv
+INFO:biocypher:Writing 10 entries to Patient-part000.csv
+INFO -- Writing 10 entries to Sample-part000.csv
+INFO:biocypher:Writing 10 entries to Sample-part000.csv
+INFO -- Writing 10 entries to Alteration-part000.csv
+INFO:biocypher:Writing 10 entries to Alteration-part000.csv
+INFO -- Writing 7 entries to Gene-part000.csv
+INFO:biocypher:Writing 7 entries to Gene-part000.csv
+DEBUG:biocypher:Translating edges to BioCypher
+DEBUG:biocypher:Finished translating edges to BioCypher.
+DEBUG:biocypher:Writing edge CSV from generator.
+INFO -- Writing 10 entries to PatientCarriesSample-part000.csv
+INFO:biocypher:Writing 10 entries to PatientCarriesSample-part000.csv
+INFO -- Writing 10 entries to SampleCarriesAlteration-part000.csv
+INFO:biocypher:Writing 10 entries to SampleCarriesAlteration-part000.csv
+INFO -- Writing 10 entries to AlterationAffectsGene-part000.csv
+INFO:biocypher:Writing 10 entries to AlterationAffectsGene-part000.csv
+INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134426/neo4j-admin-import-call.sh`.
+INFO:biocypher:Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134426/neo4j-admin-import-call.sh`.</code></pre>
 </div>
+<div class="cell-output cell-output-display" data-execution_count="15">
+<pre><code>'/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134426/neo4j-admin-import-call.sh'</code></pre>
 </div>
 </div>
 <p>The generated graph is visualized in Neo4j, and looks like this:</p>
 <div id="bce93885e9232444" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:54:19.396666Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:54:19.387317Z&quot;}}" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/graph_1.svg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/graph_1.svg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-11-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-12-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -512,13 +565,13 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <p>It is often useful to attach additional metadata to the nodes and edges in the graph. This metadata can include information such as the source of the data, the date of creation, or any other relevant information that can help in understanding the context of the data. This metadata is attached via the usage of properties.</p>
 <p>Let’s look at an extended version of the database we used in the previous section:</p>
 <div id="a372df2a77d2c057" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:54:26.958104Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:54:26.950299Z&quot;}}" data-execution_count="33">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/jobim_subsets/2_Properties/snv_subset_2.csv"</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.read_csv(<span class="st">"data/jobim_subsets/2_Properties/snv_subset_2.csv"</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display" data-execution_count="33">
 <div>
 
 
-<table class="dataframe caption-top table table-sm table-striped small" data-quarto-postprocess="true" data-border="1">
+<table class="dataframe caption-top table table-sm table-striped small" data-border="1">
 <thead>
 <tr class="header">
 <th data-quarto-table-cell-role="th"></th>
@@ -531,7 +584,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">0</td>
+<th data-quarto-table-cell-role="th">0</th>
 <td>CC1343</td>
 <td>CC5333_p2OvaL1_DNA1</td>
 <td>LATS1</td>
@@ -539,7 +592,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>The mutation effect description for truncating...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">1</td>
+<th data-quarto-table-cell-role="th">1</th>
 <td>EX1</td>
 <td>EX1_pOvaL1_DNA1</td>
 <td>BRCA1</td>
@@ -547,7 +600,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>The mutation effect description for truncating...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">2</td>
+<th data-quarto-table-cell-role="th">2</th>
 <td>CC3540</td>
 <td>CC2207_pPer1_DNA1</td>
 <td>ARID1B</td>
@@ -555,7 +608,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>The mutation effect description for truncating...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">3</td>
+<th data-quarto-table-cell-role="th">3</th>
 <td>CC4898</td>
 <td>CC0638_iOme_DNA1</td>
 <td>TP53</td>
@@ -563,7 +616,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>The mutation effect description for truncating...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">4</td>
+<th data-quarto-table-cell-role="th">4</th>
 <td>CC2114</td>
 <td>CC0047_iBow1_DNA1</td>
 <td>TP53</td>
@@ -571,7 +624,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>The mutation effect description for truncating...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">5</td>
+<th data-quarto-table-cell-role="th">5</th>
 <td>CC4700</td>
 <td>CC1860_pOvaR1_TR</td>
 <td>ARID2</td>
@@ -579,7 +632,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>The mutation effect description for truncating...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">6</td>
+<th data-quarto-table-cell-role="th">6</th>
 <td>CC4804</td>
 <td>CC3307_pAdnL1_DNA3</td>
 <td>TBL2</td>
@@ -587,7 +640,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>NaN</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">7</td>
+<th data-quarto-table-cell-role="th">7</th>
 <td>CC9548</td>
 <td>CC9256_pPer_DNA4</td>
 <td>TP53</td>
@@ -595,7 +648,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>The mutation effect description for truncating...</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">8</td>
+<th data-quarto-table-cell-role="th">8</th>
 <td>CC7699</td>
 <td>CC8958_pOva_DNA1</td>
 <td>TP53</td>
@@ -603,7 +656,7 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <td>The mutation effect description for truncating...</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">9</td>
+<th data-quarto-table-cell-role="th">9</th>
 <td>CC2375</td>
 <td>CC1492_iOth1_DNA1</td>
 <td>ADAM12</td>
@@ -618,23 +671,23 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 </div>
 <p>We have an additional column called <code>mutationEffectDescription</code>, which contains a description of the effect of a given alteration. We can use this column to add a property to the <code>alteration</code> nodes in the graph. Our extended graph schema would look like this:</p>
 <div id="651963aec7deb44d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-03T12:42:18.131931Z&quot;,&quot;start_time&quot;:&quot;2025-07-03T12:42:18.124889Z&quot;}}" data-execution_count="18">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_2_properties.svg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_2_properties.svg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-13-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-14-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>The property will be created by using the <code>map</code> transformer, which will extract the data from the <code>mutationEffectDescription</code> column and attach it to the <code>alteration</code> nodes. We achieve this by adding a <code>to_property</code> keyword to the mapping file, which specifies the name of the property to be created, as well as the <code>for_objects</code> keyword, which specifies the type of node or edge to which the property will be attached. In this case, we want to attach the property to the <code>alteration</code> nodes.</p>
 <div id="e5d06d515882655b" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:54:29.955281Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:54:29.951194Z&quot;}}" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/2_Properties/snv.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/2_Properties/snv.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
@@ -642,133 +695,160 @@ INFO -- Logging into `biocypher-log/biocypher-20250704-145213.log`.
 <p>In addition to defining the correct properties in the mapping file, we also need to define the properties in the BioCypher schema. The schema defines the properties that can be attached to the nodes and edges in the graph, as well as their data types. In this case, we want to add a property called <code>mutationEffectDescription</code> to the <code>alteration</code> nodes, which will be of type <code>string</code>. We achieve this by adding a <code>properties</code> section to the schema file, which specifies the name of the property and its data type.</p>
 <p>Let’s look at the updated mapping file:</p>
 <div id="19d2f17b117b26d8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-03T12:42:43.099384Z&quot;,&quot;start_time&quot;:&quot;2025-07-03T12:42:43.090456Z&quot;}}" data-execution_count="23">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/2_Properties/biocypher_schema.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/2_Properties/biocypher_schema.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
 </div>
 <p>We run the <code>ontoweave</code> CLI once again, as well as the code alternative.</p>
-<div id="d75b98c1aee54dd8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:54:37.101264Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:54:32.937576Z&quot;}}" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>snv_subset_2.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>snv.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d75b98c1aee54dd8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T12:44:41.329334Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T12:44:37.127947Z&quot;}}" data-execution_count="16">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> poetry run ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>snv_subset_2.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>snv.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>INFO -- This is BioCypher v0.9.6.
-INFO -- Logging into `biocypher-log/biocypher-20250704-145433.log`.
-/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704145436/neo4j-admin-import-call.sh</code></pre>
+<pre><code>INFO -- This is BioCypher v0.12.2.
+INFO -- Logging into `biocypher-log/biocypher-20260115-134437.log`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134440/neo4j-admin-import-call.sh</code></pre>
 </div>
 </div>
-<div id="b70145dc95b5efd3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:54:39.750615Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:54:37.110388Z&quot;}}" data-execution_count="36">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocypher</span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ontoweaver</span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the path to the mapping file.</span></span>
-<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>data_mapping <span class="op">=</span> {<span class="ss">f"./data/jobim_subsets/2_Properties/snv_subset_2.csv"</span>: <span class="ss">f"./jobim/2_Properties/snv.yaml"</span>}</span>
-<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract nodes and edges from the mapping file.</span></span>
-<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a>nodes, edges <span class="op">=</span> ontoweaver.extract(filename_to_mapping<span class="op">=</span>data_mapping, affix <span class="op">=</span> <span class="st">"suffix"</span>)</span>
-<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the nodes and edges using BioCypher.</span></span>
-<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>bc <span class="op">=</span> biocypher.BioCypher(</span>
-<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    biocypher_config_path<span class="op">=</span><span class="ss">f"./jobim/2_Properties/biocypher_config.yaml"</span>,</span>
-<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a>    schema_config_path<span class="op">=</span><span class="ss">f"./jobim/2_Properties/biocypher_schema.yaml"</span>,</span>
-<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>bc.write_nodes(nodes)</span>
-<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>bc.write_edges(edges)</span>
-<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>bc.write_import_call()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="b70145dc95b5efd3" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T12:44:46.804857Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T12:44:43.540216Z&quot;}}" data-execution_count="17">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocypher</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ontoweaver</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the path to the mapping file.</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>data_mapping <span class="op">=</span> {<span class="ss">f"./data/jobim_subsets/2_Properties/snv_subset_2.csv"</span>: <span class="ss">f"./jobim/2_Properties/snv.yaml"</span>}</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-7"><a href="#cb28-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract nodes and edges from the mapping file.</span></span>
+<span id="cb28-8"><a href="#cb28-8" aria-hidden="true" tabindex="-1"></a>nodes, edges <span class="op">=</span> ontoweaver.extract(data_mapping, affix <span class="op">=</span> <span class="st">"suffix"</span>)</span>
+<span id="cb28-9"><a href="#cb28-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-10"><a href="#cb28-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform nodes and edges to correct format.</span></span>
+<span id="cb28-11"><a href="#cb28-11" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> ontoweaver.ow2bc(nodes)</span>
+<span id="cb28-12"><a href="#cb28-12" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> ontoweaver.ow2bc(edges)</span>
+<span id="cb28-13"><a href="#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-14"><a href="#cb28-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the nodes and edges using BioCypher.</span></span>
+<span id="cb28-15"><a href="#cb28-15" aria-hidden="true" tabindex="-1"></a>bc <span class="op">=</span> biocypher.BioCypher(</span>
+<span id="cb28-16"><a href="#cb28-16" aria-hidden="true" tabindex="-1"></a>    biocypher_config_path<span class="op">=</span><span class="ss">f"./jobim/2_Properties/biocypher_config.yaml"</span>,</span>
+<span id="cb28-17"><a href="#cb28-17" aria-hidden="true" tabindex="-1"></a>    schema_config_path<span class="op">=</span><span class="ss">f"./jobim/2_Properties/biocypher_schema.yaml"</span>,</span>
+<span id="cb28-18"><a href="#cb28-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb28-19"><a href="#cb28-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-20"><a href="#cb28-20" aria-hidden="true" tabindex="-1"></a>bc.write_nodes(nodes)</span>
+<span id="cb28-21"><a href="#cb28-21" aria-hidden="true" tabindex="-1"></a>bc.write_edges(edges)</span>
+<span id="cb28-22"><a href="#cb28-22" aria-hidden="true" tabindex="-1"></a>bc.write_import_call()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>            Property `mutation_effect_description` not found in declared fields for node class `alteration`.
-            Property `mutation_effect_description` not found in declared fields for node class `alteration`.
+<pre><code>WARNING:ontoweaver:         Property `mutation_effect_description` not found in declared fields for node class `alteration`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
 INFO -- Running BioCypher with schema configuration from ./jobim/2_Properties/biocypher_schema.yaml.
+INFO:biocypher:Running BioCypher with schema configuration from ./jobim/2_Properties/biocypher_schema.yaml.
 INFO -- Loading ontologies...
+INFO:biocypher:Loading ontologies...
 INFO -- Instantiating OntologyAdapter class for https://github.com/biolink/biolink-model/raw/v3.2.1/biolink-model.owl.ttl.
+INFO:biocypher:Instantiating OntologyAdapter class for https://github.com/biolink/biolink-model/raw/v3.2.1/biolink-model.owl.ttl.
 INFO -- Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO:biocypher:Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
 INFO -- Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
-INFO -- Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704145439`.
+INFO:biocypher:Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO -- Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134446`.
+INFO:biocypher:Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134446`.
+DEBUG:biocypher:Writing node CSV from generator.
+DEBUG:biocypher:Translating nodes to BioCypher
 WARNING -- Duplicate node type gene found. 
+WARNING:biocypher:Duplicate node type gene found. 
+DEBUG:biocypher:Finished translating nodes to BioCypher.
 INFO -- Writing 10 entries to Patient-part000.csv
+INFO:biocypher:Writing 10 entries to Patient-part000.csv
 INFO -- Writing 10 entries to Sample-part000.csv
+INFO:biocypher:Writing 10 entries to Sample-part000.csv
 INFO -- Writing 10 entries to Alteration-part000.csv
+INFO:biocypher:Writing 10 entries to Alteration-part000.csv
 INFO -- Writing 7 entries to Gene-part000.csv
+INFO:biocypher:Writing 7 entries to Gene-part000.csv
+DEBUG:biocypher:Translating edges to BioCypher
+DEBUG:biocypher:Finished translating edges to BioCypher.
+DEBUG:biocypher:Writing edge CSV from generator.
 INFO -- Writing 10 entries to PatientCarriesSample-part000.csv
+INFO:biocypher:Writing 10 entries to PatientCarriesSample-part000.csv
 INFO -- Writing 10 entries to SampleCarriesAlteration-part000.csv
+INFO:biocypher:Writing 10 entries to SampleCarriesAlteration-part000.csv
 INFO -- Writing 10 entries to AlterationAffectsGene-part000.csv
-INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704145439/neo4j-admin-import-call.sh`.</code></pre>
+INFO:biocypher:Writing 10 entries to AlterationAffectsGene-part000.csv
+INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134446/neo4j-admin-import-call.sh`.
+INFO:biocypher:Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134446/neo4j-admin-import-call.sh`.</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="36">
-<pre><code>'/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704145439/neo4j-admin-import-call.sh'</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="17">
+<pre><code>'/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134446/neo4j-admin-import-call.sh'</code></pre>
 </div>
 </div>
 <p>Now, each alteration node has the new property attached to itself. This can be easily visualized in the Neo4j browser.</p>
 <div id="1916ea5881f8dec7" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-03T13:35:43.763865Z&quot;,&quot;start_time&quot;:&quot;2025-07-03T13:35:43.758108Z&quot;}}" data-execution_count="29">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, JSON, Image</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>display(Image(<span class="st">"figures/jobim/Node_properties.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, JSON, Image</span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>display(Image(<span class="st">"figures/jobim/Node_properties.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-19-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>In some cases you may wish to add metadata to all the nodes and edges you extract from a single database, such as the database name, origin, etc. Imagine that we want to add a property called <code>name</code> to all the nodes and edges extracted from the SNV database, which will contain the name of the database. Our graph schema would look like this:</p>
 <div id="8592fb8c8c7cbbd6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-03T12:42:45.642683Z&quot;,&quot;start_time&quot;:&quot;2025-07-03T12:42:45.634411Z&quot;}}" data-execution_count="24">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_2_metadata.svg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_2_metadata.svg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-19-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-20-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>This can be easily achieved by using the <code>metadata</code> option OntoWeaver provides. The metadata is defined in the mapping file, and it will be added to all the nodes and edges extracted from the database. Below we show an example of how to define the metadata in the mapping file.</p>
 <div id="10c7b3134cbc52c2" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-06-30T10:03:27.827770Z&quot;,&quot;start_time&quot;:&quot;2025-06-30T10:03:27.822485Z&quot;}}" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/2_Properties/snv_metadata.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/2_Properties/snv_metadata.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
 </div>
 <p>This new change must also be reflected in the BioCypher schema, so we need to update the schema file to include an additional property called <code>name</code>.</p>
 <div id="85f45487a3f9fdfd" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-06-30T10:03:29.970536Z&quot;,&quot;start_time&quot;:&quot;2025-06-30T10:03:29.962496Z&quot;}}" data-execution_count="35">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/2_Properties/biocypher_schema_metadata.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/2_Properties/biocypher_schema_metadata.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
 </div>
 <p>As in the previous section, we can run the OntoWeaver CLI to map the data from the CSV file to the graph.</p>
-<div id="9e72889cf85e146a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-03T13:37:33.733479Z&quot;,&quot;start_time&quot;:&quot;2025-07-03T13:37:26.881572Z&quot;}}" data-execution_count="30">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>snv_subset_2.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>snv_metadata.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9e72889cf85e146a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T12:44:58.307606Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T12:44:53.936374Z&quot;}}" data-execution_count="18">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> poetry run ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>snv_subset_2.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>snv_metadata.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">2</span><span class="er">_Properties</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>INFO -- This is BioCypher v0.9.1.
-INFO -- Logging into `biocypher-log/biocypher-20250703-153726.log`.
-/Users/mbaric/ontoweaver-vignette/biocypher-out/20250703153733/neo4j-admin-import-call.sh</code></pre>
+<pre><code>INFO -- This is BioCypher v0.12.2.
+INFO -- Logging into `biocypher-log/biocypher-20260115-134454.log`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134457/neo4j-admin-import-call.sh</code></pre>
 </div>
 </div>
 <p>We may also run the same command using the Python API, as shown below.</p>
 <div id="cd4e239b48c6df64" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-03T13:49:06.244137Z&quot;,&quot;start_time&quot;:&quot;2025-07-03T13:49:06.237270Z&quot;}}" data-execution_count="34">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, JSON, Image</span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>display(Image(<span class="st">"figures/jobim/Node_properties_metadata.png"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display, JSON, Image</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>display(Image(<span class="st">"figures/jobim/Node_properties_metadata.png"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-24-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -779,23 +859,23 @@ INFO -- Logging into `biocypher-log/biocypher-20250703-153726.log`.
 <p>Very often you might be in a situation where the information you wish to integrate is spread across several databases. In this case, you can use OntoWeaver to map multiple databases into a single graph. This is done by defining multiple mapping files, each corresponding to a different database, and then running the OntoWeaver CLI for all the adapters together.</p>
 <p>In this example we will be using the same database as in the previous sections, containing SNVs, but we will expand our graph schema to include actionable drugs for the identified alterations. We will use the OncoKB database, which contains information about actionable drugs for alterations in cancer. We will also expand the SNV mapping file to include an additional node of type <code>functional outcome</code>. Below we show the updated graph schema, which includes the new nodes and edges.</p>
 <div id="4fd2dddda956037f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-06-30T10:03:40.595022Z&quot;,&quot;start_time&quot;:&quot;2025-06-30T10:03:40.586366Z&quot;}}" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_3.svg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_3.svg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-24-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-25-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Below we show the mapping file for the OncoKB database.</p>
 <div id="e2a754996458c82d" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-06-30T10:03:42.781588Z&quot;,&quot;start_time&quot;:&quot;2025-06-30T10:03:42.776815Z&quot;}}" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/3_Multiple_databases/oncokb.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/3_Multiple_databases/oncokb.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb41-6"><a href="#cb41-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
@@ -803,12 +883,12 @@ INFO -- Logging into `biocypher-log/biocypher-20250703-153726.log`.
 <p>In this mapping file, we define the subject node as the <code>alteration</code> node, which is created from the <code>alteration</code> column, similarly as in the SNV example. We then define the <code>drug</code> node, which is created from the <code>treatment</code> column. Here we have our first example of a more complex transformer - <code>replace</code>, which replaces all the special characters (TODO MENTION SPECIAL CHARACTERS PRESENT IN THE DATA) with an underscore, defined via the <code>substitute</code> keyword, specific for the transformer, so that the node ID is valid. We then define the edge of type <code>alteration_biomarker_for_drug</code> between the <code>alteration</code> and <code>drug</code> nodes. We also include the <code>metadata</code> option, which adds a property called <code>name</code> to all the nodes and edges extracted from the OncoKB database, similarly as in the previous section.</p>
 <p>We also expand the Single Nucleotide Variants mapping file with an additional transformer - <code>cat_format</code> to create an additional node of type <code>functional outcome</code>. Let’s look at the mapping file for the SNV database.</p>
 <div id="dc5e2bc329c05e35" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-06-30T10:03:45.138533Z&quot;,&quot;start_time&quot;:&quot;2025-06-30T10:03:45.132062Z&quot;}}" data-execution_count="39">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/3_Multiple_databases/snv.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/3_Multiple_databases/snv.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
@@ -816,85 +896,120 @@ INFO -- Logging into `biocypher-log/biocypher-20250703-153726.log`.
 <p>We see here the <code>cat_format</code> transformer, which concatenates the values of the <code>hugoSymbol</code> and <code>gene_role</code> columns. The concatenation of the value is done by using a <code>format_string</code>, defining how the extracted values of each columns will be treated. In this case the values will be concatenated with a <code>:</code> symbol inbetween. The new node will be of type <code>functional_outcome</code>, and the edge will be of type <code>alteration_causes_functional_outcome</code>.</p>
 <p>These new nodes and edges need to be reflected in the BioCypher schema, so we need to update the schema file to include the new nodes and edges. Below we show the updated schema file.</p>
 <div id="cf00e15ad6199718" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-06-30T10:03:47.019800Z&quot;,&quot;start_time&quot;:&quot;2025-06-30T10:03:47.011498Z&quot;}}" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/3_Multiple_databases/biocypher_schema.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/3_Multiple_databases/biocypher_schema.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
 </div>
 <p>We can now once again run the CLI to build up our graph database.</p>
-<div id="39a696fdba4d8dc6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-03T14:00:08.733300Z&quot;,&quot;start_time&quot;:&quot;2025-07-03T14:00:02.917884Z&quot;}}" data-execution_count="40">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>snv_subset_3.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>snv.yaml  .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>treatments_subset.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>oncokb.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="39a696fdba4d8dc6" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T12:45:12.218183Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T12:45:08.289723Z&quot;}}" data-execution_count="19">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> poetry run ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>snv_subset_3.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>snv.yaml  .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>treatments_subset.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>oncokb.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">3</span><span class="er">_Multiple_databases</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>INFO -- This is BioCypher v0.9.1.
-INFO -- Logging into `biocypher-log/biocypher-20250703-160002.log`.
-/Users/mbaric/ontoweaver-vignette/biocypher-out/20250703160008/neo4j-admin-import-call.sh</code></pre>
+<pre><code>INFO -- This is BioCypher v0.12.2.
+INFO -- Logging into `biocypher-log/biocypher-20260115-134508.log`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`, `hugoSymbol`, `outcome`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+WARNING:ontoweaver:Skip output validation for columns: `treatment`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134511/neo4j-admin-import-call.sh</code></pre>
 </div>
 </div>
 <p>Note that we have now modified the CLI to use two pairs of <code>DATABASE:MAPPING_FILE</code> mappings. This also needs to be reflected in case of using the API:</p>
-<div id="ff77a5b6413e0866" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-03T14:03:44.711693Z&quot;,&quot;start_time&quot;:&quot;2025-07-03T14:03:39.958223Z&quot;}}" data-execution_count="41">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocypher</span>
-<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ontoweaver</span>
-<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the path to the mapping file. This time we define two paris of DATABASE:MAPPING_FILE mappings.</span></span>
-<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>data_mappings <span class="op">=</span> {<span class="ss">f"./data/jobim_subsets/3_Multiple_databases/snv_subset_3.csv"</span>: <span class="ss">f"./jobim/3_Multiple_databases/snv.yaml"</span>,</span>
-<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"./data/jobim_subsets/3_Multiple_databases/treatments_subset.csv"</span>: <span class="ss">f"./jobim/3_Multiple_databases/oncokb.yaml"</span>}</span>
-<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract nodes and edges from the mapping file.</span></span>
-<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a>nodes, edges <span class="op">=</span> ontoweaver.extract(filename_to_mapping<span class="op">=</span>data_mappings, affix <span class="op">=</span> <span class="st">"suffix"</span>)</span>
-<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-11"><a href="#cb44-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the nodes and edges using BioCypher.</span></span>
-<span id="cb44-12"><a href="#cb44-12" aria-hidden="true" tabindex="-1"></a>bc <span class="op">=</span> biocypher.BioCypher(</span>
-<span id="cb44-13"><a href="#cb44-13" aria-hidden="true" tabindex="-1"></a>    biocypher_config_path<span class="op">=</span><span class="ss">f"./jobim/3_Multiple_databases/biocypher_config.yaml"</span>,</span>
-<span id="cb44-14"><a href="#cb44-14" aria-hidden="true" tabindex="-1"></a>    schema_config_path<span class="op">=</span><span class="ss">f"./jobim/3_Multiple_databases/biocypher_schema.yaml"</span>,</span>
-<span id="cb44-15"><a href="#cb44-15" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb44-16"><a href="#cb44-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb44-17"><a href="#cb44-17" aria-hidden="true" tabindex="-1"></a>bc.write_nodes(nodes)</span>
-<span id="cb44-18"><a href="#cb44-18" aria-hidden="true" tabindex="-1"></a>bc.write_edges(edges)</span>
-<span id="cb44-19"><a href="#cb44-19" aria-hidden="true" tabindex="-1"></a>bc.write_import_call()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="ff77a5b6413e0866" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T12:45:28.279174Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T12:45:24.871733Z&quot;}}" data-execution_count="20">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocypher</span>
+<span id="cb49-2"><a href="#cb49-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ontoweaver</span>
+<span id="cb49-3"><a href="#cb49-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-4"><a href="#cb49-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the path to the mapping file. This time we define two paris of DATABASE:MAPPING_FILE mappings.</span></span>
+<span id="cb49-5"><a href="#cb49-5" aria-hidden="true" tabindex="-1"></a>data_mappings <span class="op">=</span> {<span class="ss">f"./data/jobim_subsets/3_Multiple_databases/snv_subset_3.csv"</span>: <span class="ss">f"./jobim/3_Multiple_databases/snv.yaml"</span>,</span>
+<span id="cb49-6"><a href="#cb49-6" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"./data/jobim_subsets/3_Multiple_databases/treatments_subset.csv"</span>: <span class="ss">f"./jobim/3_Multiple_databases/oncokb.yaml"</span>}</span>
+<span id="cb49-7"><a href="#cb49-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-8"><a href="#cb49-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract nodes and edges from the mapping file.</span></span>
+<span id="cb49-9"><a href="#cb49-9" aria-hidden="true" tabindex="-1"></a>nodes, edges <span class="op">=</span> ontoweaver.extract(data_mappings, affix <span class="op">=</span> <span class="st">"suffix"</span>)</span>
+<span id="cb49-10"><a href="#cb49-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-11"><a href="#cb49-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Transform nodes and edges to correct format.</span></span>
+<span id="cb49-12"><a href="#cb49-12" aria-hidden="true" tabindex="-1"></a>nodes <span class="op">=</span> ontoweaver.ow2bc(nodes)</span>
+<span id="cb49-13"><a href="#cb49-13" aria-hidden="true" tabindex="-1"></a>edges <span class="op">=</span> ontoweaver.ow2bc(edges)</span>
+<span id="cb49-14"><a href="#cb49-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-15"><a href="#cb49-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Write the nodes and edges using BioCypher.</span></span>
+<span id="cb49-16"><a href="#cb49-16" aria-hidden="true" tabindex="-1"></a>bc <span class="op">=</span> biocypher.BioCypher(</span>
+<span id="cb49-17"><a href="#cb49-17" aria-hidden="true" tabindex="-1"></a>    biocypher_config_path<span class="op">=</span><span class="ss">f"./jobim/3_Multiple_databases/biocypher_config.yaml"</span>,</span>
+<span id="cb49-18"><a href="#cb49-18" aria-hidden="true" tabindex="-1"></a>    schema_config_path<span class="op">=</span><span class="ss">f"./jobim/3_Multiple_databases/biocypher_schema.yaml"</span>,</span>
+<span id="cb49-19"><a href="#cb49-19" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb49-20"><a href="#cb49-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb49-21"><a href="#cb49-21" aria-hidden="true" tabindex="-1"></a>bc.write_nodes(nodes)</span>
+<span id="cb49-22"><a href="#cb49-22" aria-hidden="true" tabindex="-1"></a>bc.write_edges(edges)</span>
+<span id="cb49-23"><a href="#cb49-23" aria-hidden="true" tabindex="-1"></a>bc.write_import_call()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>            Property `mutation_effect_description` not found in declared fields for node class `alteration`.
-            Property `mutation_effect_description` not found in declared fields for node class `alteration`.
-            Property `mutation_effect_description` not found in declared fields for node class `alteration`.
+<pre><code>WARNING:ontoweaver:         Property `mutation_effect_description` not found in declared fields for node class `alteration`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`, `hugoSymbol`, `outcome`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+WARNING:ontoweaver:Skip output validation for columns: `treatment`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
 INFO -- Running BioCypher with schema configuration from ./jobim/3_Multiple_databases/biocypher_schema.yaml.
+INFO:biocypher:Running BioCypher with schema configuration from ./jobim/3_Multiple_databases/biocypher_schema.yaml.
 INFO -- Loading ontologies...
+INFO:biocypher:Loading ontologies...
 INFO -- Instantiating OntologyAdapter class for https://github.com/biolink/biolink-model/raw/v3.2.1/biolink-model.owl.ttl.
+INFO:biocypher:Instantiating OntologyAdapter class for https://github.com/biolink/biolink-model/raw/v3.2.1/biolink-model.owl.ttl.
 INFO -- Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO:biocypher:Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
 INFO -- Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
-INFO -- Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20250703160344`.
+INFO:biocypher:Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO -- Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134528`.
+INFO:biocypher:Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134528`.
+DEBUG:biocypher:Writing node CSV from generator.
+DEBUG:biocypher:Translating nodes to BioCypher
 WARNING -- Duplicate node type gene found. 
+WARNING:biocypher:Duplicate node type gene found. 
 WARNING -- Duplicate node type functional outcome found. 
+WARNING:biocypher:Duplicate node type functional outcome found. 
 WARNING -- Duplicate node type alteration found. 
+WARNING:biocypher:Duplicate node type alteration found. 
 WARNING -- Duplicate node type drug found. 
+WARNING:biocypher:Duplicate node type drug found. 
+DEBUG:biocypher:Finished translating nodes to BioCypher.
 INFO -- Writing 10 entries to Patient-part000.csv
+INFO:biocypher:Writing 10 entries to Patient-part000.csv
 INFO -- Writing 10 entries to Sample-part000.csv
-INFO -- Writing 17 entries to Alteration-part000.csv
+INFO:biocypher:Writing 10 entries to Sample-part000.csv
+INFO -- Writing 11 entries to Alteration-part000.csv
+INFO:biocypher:Writing 11 entries to Alteration-part000.csv
 INFO -- Writing 7 entries to Gene-part000.csv
+INFO:biocypher:Writing 7 entries to Gene-part000.csv
 INFO -- Writing 7 entries to FunctionalOutcome-part000.csv
+INFO:biocypher:Writing 7 entries to FunctionalOutcome-part000.csv
 INFO -- Writing 22 entries to Drug-part000.csv
+INFO:biocypher:Writing 22 entries to Drug-part000.csv
+DEBUG:biocypher:Translating edges to BioCypher
+DEBUG:biocypher:Finished translating edges to BioCypher.
 WARNING -- Duplicate edge type alteration biomarker for drug found. 
+WARNING:biocypher:Duplicate edge type alteration biomarker for drug found. 
+DEBUG:biocypher:Writing edge CSV from generator.
 INFO -- Writing 10 entries to PatientCarriesSample-part000.csv
+INFO:biocypher:Writing 10 entries to PatientCarriesSample-part000.csv
 INFO -- Writing 10 entries to SampleCarriesAlteration-part000.csv
+INFO:biocypher:Writing 10 entries to SampleCarriesAlteration-part000.csv
 INFO -- Writing 10 entries to AlterationAffectsGene-part000.csv
+INFO:biocypher:Writing 10 entries to AlterationAffectsGene-part000.csv
 INFO -- Writing 10 entries to AlterationCausesFunctionalOutcome-part000.csv
+INFO:biocypher:Writing 10 entries to AlterationCausesFunctionalOutcome-part000.csv
 INFO -- Writing 36 entries to AlterationBiomarkerForDrug-part000.csv
-INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20250703160344/neo4j-admin-import-call.sh`.</code></pre>
+INFO:biocypher:Writing 36 entries to AlterationBiomarkerForDrug-part000.csv
+INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134528/neo4j-admin-import-call.sh`.
+INFO:biocypher:Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134528/neo4j-admin-import-call.sh`.</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="41">
-<pre><code>'/Users/mbaric/ontoweaver-vignette/biocypher-out/20250703160344/neo4j-admin-import-call.sh'</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="20">
+<pre><code>'/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134528/neo4j-admin-import-call.sh'</code></pre>
 </div>
 </div>
 <p>We visualize below the generated graph.</p>
 <div id="a82c8a1ebe603d3f" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:54:55.319023Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:54:55.310039Z&quot;}}" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/graph_3.svg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/graph_3.svg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-30-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-31-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -907,12 +1022,12 @@ INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocy
 <p>In this example we introduce the Copy Number Alterations (CNA) database, in addition to the SNV and OncoKB databases, shown in the previous sections.</p>
 <p>Let’s first have a look at the mapping file for the CNA database:</p>
 <div id="b770a11acea9d43c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T12:54:59.257594Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T12:54:59.250599Z&quot;}}" data-execution_count="38">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/4_Fusion/cna.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb48-6"><a href="#cb48-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/4_Fusion/cna.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
@@ -920,12 +1035,12 @@ INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocy
 <p>Similarly as in the case of the SNV mapping file, we define the subject node as the <code>patient</code> node, which is created from the <code>patient_id</code> column, and we define all of the other same types as in the previous cases - <code>alteration</code>, <code>gene</code>, and <code>sample</code>. Here we define two additional properties for the <code>alteration</code> node, which are <code>variant_summary</code>, and <code>tumor_type_summary</code>, and we include the newly defined properties in the BioCypher schema.</p>
 <p>Here is the updated BioCypher schema file, which includes the new properties for the <code>alteration</code> node:</p>
 <div id="55cfbbe0141c01e8" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-06-30T10:04:16.712576Z&quot;,&quot;start_time&quot;:&quot;2025-06-30T10:04:16.705278Z&quot;}}" data-execution_count="42">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/4_Fusion/biocypher_schema.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Read the file content.</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"jobim/4_Fusion/biocypher_schema.yaml"</span>, <span class="st">"r"</span>) <span class="im">as</span> <span class="bu">file</span>:</span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>    content <span class="op">=</span> yaml.safe_load(<span class="bu">file</span>)</span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the content.</span></span>
+<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>display(JSON(content))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <pre><code>&lt;IPython.core.display.JSON object&gt;</code></pre>
 </div>
@@ -934,84 +1049,104 @@ INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocy
 <p>An importatnt thing to to note is that the Biocypher schema must be updated to include all the possible properties for the <code>alteration</code> node, from both databases, in order to successfully run BioCypher. You can take a look at the schema file above.</p>
 <p>Our updated graph schema, which includes the new properties for the <code>alteration</code> node, would thus look like this:</p>
 <div id="18056b4b178c1e5a" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-06-30T10:06:19.662252Z&quot;,&quot;start_time&quot;:&quot;2025-06-30T10:06:19.651174Z&quot;}}" data-execution_count="43">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_4.svg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/Example_4.svg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-33-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-34-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Let’s now run the <code>ontoweave</code> CLI:</p>
-<div id="9044c519429ebb1c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T13:11:45.899198Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T13:11:41.571489Z&quot;}}" data-execution_count="76">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>snv_subset_4.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>snv.yaml  .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>treatments_subset.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>oncokb.yaml data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>cna_subset.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>cna.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="9044c519429ebb1c" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T12:45:44.773712Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T12:45:40.557538Z&quot;}}" data-execution_count="21">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a><span class="op">!</span> poetry run ontoweave .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>snv_subset_4.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>snv.yaml  .<span class="op">/</span>data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>treatments_subset.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>oncokb.yaml data<span class="op">/</span>jobim_subsets<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>cna_subset.csv:.<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>cna.yaml <span class="op">--</span>biocypher<span class="op">-</span>config .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>biocypher_config.yaml <span class="op">--</span>biocypher<span class="op">-</span>schema .<span class="op">/</span>jobim<span class="op">/</span><span class="dv">4</span><span class="er">_Fusion</span><span class="op">/</span>biocypher_schema.yaml <span class="op">-</span>a suffix</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>INFO -- This is BioCypher v0.9.6.
-INFO -- Logging into `biocypher-log/biocypher-20250704-151141.log`.
+<pre><code>INFO -- This is BioCypher v0.12.2.
+INFO -- Logging into `biocypher-log/biocypher-20260115-134540.log`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`, `hugoSymbol`, `outcome`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+WARNING:ontoweaver:Skip output validation for columns: `treatment`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
 WARNING:ontoweaver:         Property `variant_summary` not found in declared fields for node class `alteration`.
 WARNING:ontoweaver:         Property `tumor_type_summary` not found in declared fields for node class `alteration`.
-WARNING:ontoweaver:         Property `variant_summary` not found in declared fields for node class `alteration`.
-WARNING:ontoweaver:         Property `tumor_type_summary` not found in declared fields for node class `alteration`.
-/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704151145/neo4j-admin-import-call.sh</code></pre>
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `hugoSymbol`, `alteration`, `hugoSymbol`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134544/neo4j-admin-import-call.sh</code></pre>
 </div>
 </div>
 <p>Apart from running the CLI, you may also run the Python API. Notice that it is a bit different compared to the previously seen one. This is due to the usage of the Fusion core, for property merging.</p>
-<div id="d6350fe22937b9b9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T14:44:06.346115Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T14:44:03.355639Z&quot;}}" data-execution_count="91">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocypher</span>
-<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ontoweaver</span>
-<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the path to the mapping file. This time we define two paris of DATABASE:MAPPING_FILE mappings.</span></span>
-<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>data_mappings <span class="op">=</span> {<span class="ss">f"./data/jobim_subsets/4_Fusion/snv_subset_4.csv"</span>: <span class="ss">f"./jobim/4_Fusion/snv.yaml"</span>,</span>
-<span id="cb55-6"><a href="#cb55-6" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"./data/jobim_subsets/4_Fusion/treatments_subset.csv"</span>: <span class="ss">f"./jobim/4_Fusion/oncokb.yaml"</span>,</span>
-<span id="cb55-7"><a href="#cb55-7" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"./data/jobim_subsets/4_Fusion/cna_subset.csv"</span>: <span class="ss">f"./jobim/4_Fusion/cna.yaml"</span>}</span>
-<span id="cb55-8"><a href="#cb55-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb55-9"><a href="#cb55-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract nodes and edges from the mapping file. Reconciliate properties, and write nodes.</span></span>
-<span id="cb55-10"><a href="#cb55-10" aria-hidden="true" tabindex="-1"></a>ontoweaver.extract_reconciliate_write(filename_to_mapping<span class="op">=</span>data_mappings, affix <span class="op">=</span> <span class="st">"suffix"</span>,</span>
-<span id="cb55-11"><a href="#cb55-11" aria-hidden="true" tabindex="-1"></a>                                                     biocypher_config_path<span class="op">=</span><span class="ss">f"./jobim/4_Fusion/biocypher_config.yaml"</span>,</span>
-<span id="cb55-12"><a href="#cb55-12" aria-hidden="true" tabindex="-1"></a>                                                     schema_path<span class="op">=</span><span class="ss">f"./jobim/4_Fusion/biocypher_schema.yaml"</span>,)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="d6350fe22937b9b9" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2026-01-15T12:46:22.245903Z&quot;,&quot;start_time&quot;:&quot;2026-01-15T12:46:18.819623Z&quot;}}" data-execution_count="24">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> biocypher</span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> ontoweaver</span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Define the path to the mapping file. This time we define two paris of DATABASE:MAPPING_FILE mappings.</span></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a>data_mappings <span class="op">=</span> {<span class="ss">f"./data/jobim_subsets/4_Fusion/snv_subset_4.csv"</span>: <span class="ss">f"./jobim/4_Fusion/snv.yaml"</span>,</span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"./data/jobim_subsets/4_Fusion/treatments_subset.csv"</span>: <span class="ss">f"./jobim/4_Fusion/oncokb.yaml"</span>,</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a>                 <span class="ss">f"./data/jobim_subsets/4_Fusion/cna_subset.csv"</span>: <span class="ss">f"./jobim/4_Fusion/cna.yaml"</span>}</span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract nodes and edges from the mapping file. Reconciliate properties, and write nodes.</span></span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>ontoweaver.extract_reconciliate_write(data_to_mapping<span class="op">=</span>data_mappings, affix <span class="op">=</span> <span class="st">"suffix"</span>,</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>                                                     biocypher_config_path<span class="op">=</span><span class="ss">f"./jobim/4_Fusion/biocypher_config.yaml"</span>,</span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>                                                     schema_path<span class="op">=</span><span class="ss">f"./jobim/4_Fusion/biocypher_schema.yaml"</span>,)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>            Property `mutation_effect_description` not found in declared fields for node class `alteration`.
-            Property `mutation_effect_description` not found in declared fields for node class `alteration`.
-            Property `mutation_effect_description` not found in declared fields for node class `alteration`.
-            Property `variant_summary` not found in declared fields for node class `alteration`.
-            Property `tumor_type_summary` not found in declared fields for node class `alteration`.
-            Property `variant_summary` not found in declared fields for node class `alteration`.
-            Property `tumor_type_summary` not found in declared fields for node class `alteration`.
+<pre><code>WARNING:ontoweaver:The `extract_reconciliate_write` function is deprecated and will be removed in the next version, use `weave` instead.
+WARNING:ontoweaver:         Property `mutation_effect_description` not found in declared fields for node class `alteration`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `alteration`, `hugoSymbol`, `hugoSymbol`, `outcome`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+WARNING:ontoweaver:Skip output validation for columns: `treatment`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
+WARNING:ontoweaver:         Property `variant_summary` not found in declared fields for node class `alteration`.
+WARNING:ontoweaver:         Property `tumor_type_summary` not found in declared fields for node class `alteration`.
+WARNING:ontoweaver:Skip output validation for columns: `sample_id`, `hugoSymbol`, `alteration`, `hugoSymbol`. This could result in some empty or `nan` nodes. To enable output validation set `validate_output` to `True`.
 INFO -- Running BioCypher with schema configuration from ./jobim/4_Fusion/biocypher_schema.yaml.
+INFO:biocypher:Running BioCypher with schema configuration from ./jobim/4_Fusion/biocypher_schema.yaml.
 INFO -- Loading ontologies...
+INFO:biocypher:Loading ontologies...
 INFO -- Instantiating OntologyAdapter class for https://github.com/biolink/biolink-model/raw/v3.2.1/biolink-model.owl.ttl.
+INFO:biocypher:Instantiating OntologyAdapter class for https://github.com/biolink/biolink-model/raw/v3.2.1/biolink-model.owl.ttl.
 INFO -- Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO:biocypher:Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
 INFO -- Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
-INFO -- Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704164406`.
-INFO -- Writing 20 entries to Alteration-part000.csv
-INFO -- Writing 20 entries to Sample-part000.csv
-INFO -- Writing 17 entries to Gene-part000.csv
-INFO -- Writing 22 entries to Drug-part000.csv
-INFO -- Writing 7 entries to FunctionalOutcome-part000.csv
+INFO:biocypher:Instantiating OntologyAdapter class for http://purl.obolibrary.org/obo/so.owl.
+INFO -- Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134622`.
+INFO:biocypher:Creating output directory `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134622`.
+DEBUG:biocypher:Writing node CSV from generator.
+DEBUG:biocypher:Translating nodes to BioCypher
+DEBUG:biocypher:Finished translating nodes to BioCypher.
 INFO -- Writing 19 entries to Patient-part000.csv
-WARNING -- Duplicate edge type alteration affects gene found. 
-WARNING -- Duplicate edge type sample carries alteration found. 
-WARNING -- Duplicate edge type alteration biomarker for drug found. 
-WARNING -- Duplicate edge type alteration causes functional outcome found. 
-WARNING -- Duplicate edge type patient carries sample found. 
-INFO -- Writing 1 entries to AlterationAffectsGene-part000.csv
-INFO -- Writing 1 entries to AlterationBiomarkerForDrug-part000.csv
-INFO -- Writing 1 entries to PatientCarriesSample-part000.csv
-INFO -- Writing 1 entries to SampleCarriesAlteration-part000.csv
-INFO -- Writing 1 entries to AlterationCausesFunctionalOutcome-part000.csv
-INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704164406/neo4j-admin-import-call.sh`.</code></pre>
+INFO:biocypher:Writing 19 entries to Patient-part000.csv
+INFO -- Writing 17 entries to Gene-part000.csv
+INFO:biocypher:Writing 17 entries to Gene-part000.csv
+INFO -- Writing 22 entries to Drug-part000.csv
+INFO:biocypher:Writing 22 entries to Drug-part000.csv
+INFO -- Writing 20 entries to Sample-part000.csv
+INFO:biocypher:Writing 20 entries to Sample-part000.csv
+INFO -- Writing 20 entries to Alteration-part000.csv
+INFO:biocypher:Writing 20 entries to Alteration-part000.csv
+INFO -- Writing 7 entries to FunctionalOutcome-part000.csv
+INFO:biocypher:Writing 7 entries to FunctionalOutcome-part000.csv
+DEBUG:biocypher:Translating edges to BioCypher
+DEBUG:biocypher:Finished translating edges to BioCypher.
+DEBUG:biocypher:Writing edge CSV from generator.
+INFO -- Writing 20 entries to SampleCarriesAlteration-part000.csv
+INFO:biocypher:Writing 20 entries to SampleCarriesAlteration-part000.csv
+INFO -- Writing 20 entries to PatientCarriesSample-part000.csv
+INFO:biocypher:Writing 20 entries to PatientCarriesSample-part000.csv
+INFO -- Writing 36 entries to AlterationBiomarkerForDrug-part000.csv
+INFO:biocypher:Writing 36 entries to AlterationBiomarkerForDrug-part000.csv
+INFO -- Writing 10 entries to AlterationCausesFunctionalOutcome-part000.csv
+INFO:biocypher:Writing 10 entries to AlterationCausesFunctionalOutcome-part000.csv
+INFO -- Writing 20 entries to AlterationAffectsGene-part000.csv
+INFO:biocypher:Writing 20 entries to AlterationAffectsGene-part000.csv
+INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134622/neo4j-admin-import-call.sh`.
+INFO:biocypher:Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134622/neo4j-admin-import-call.sh`.</code></pre>
 </div>
-<div class="cell-output cell-output-display" data-execution_count="91">
-<pre><code>'/Users/mbaric/ontoweaver-vignette/biocypher-out/20250704164406/neo4j-admin-import-call.sh'</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="24">
+<pre><code>'/Users/mbaric/ontoweaver-vignette/biocypher-out/20260115134622/neo4j-admin-import-call.sh'</code></pre>
 </div>
 </div>
 <div id="6e1889b9acd4e984" class="cell" data-quarto-private-1="{&quot;key&quot;:&quot;ExecuteTime&quot;,&quot;value&quot;:{&quot;end_time&quot;:&quot;2025-07-04T13:15:55.177150Z&quot;,&quot;start_time&quot;:&quot;2025-07-04T13:15:54.930795Z&quot;}}" data-execution_count="77">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/graph_4.svg"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a>display(SVG(<span class="st">"figures/jobim/graph_4.svg"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="vignette_jobim_files/figure-html/cell-36-output-1.svg" class="img-fluid figure-img"></p>
+<p><img src="vignette_jobim_files/figure-html/cell-37-output-1.svg" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
@@ -1072,13 +1207,14 @@ INFO -- Writing oncodash import call to `/Users/mbaric/ontoweaver-vignette/biocy
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
